@@ -15,4 +15,9 @@ public class User {
 
     @ManyToOne
     private Group group;
+
+    public User(String username, Group group) {
+        this.name = username;
+        this.group = group;
+    }
 }
