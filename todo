@@ -5,7 +5,6 @@ GET /group/leave
 GET /group/{id}
 POST /message
 GET /message
-GET /message/{id}
 
 banco
 nome do banco: groupapp
