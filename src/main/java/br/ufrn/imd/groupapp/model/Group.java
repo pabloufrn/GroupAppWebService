@@ -3,6 +3,7 @@ package br.ufrn.imd.groupapp.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -12,4 +13,7 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+
+    @OneToMany(mappedBy = "group")
+    private List<User> userList;
 }
