@@ -1,0 +1,18 @@
+Endpoint
+POST /group
+POST /group/join/username
+GET /group/leave
+GET /group/{id}
+POST /message
+GET /message
+GET /message/{id}
+
+banco
+nome do banco: groupapp
+nome do usuario: groupapp
+senha do usuario: groupapp
+
+aplicação vue
+tela de definição de nome
+tela de listagem de grupos
+tela de chat do grupo
