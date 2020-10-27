@@ -1,30 +1,29 @@
 package br.ufrn.imd.groupapp.controller;
 
 import br.ufrn.imd.groupapp.model.Message;
+import br.ufrn.imd.groupapp.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-/*
+
+@RestController
 public class MessageController {
 
     @Autowired
-    JpaRepository repository;
+    private MessageRepository repository;
 
 
     @GetMapping("/message")
-    List<Message> findAll() {
-        return repository.findAll();
+    ResponseEntity<List<Message>> findAll() {
+        List<Message> msg = repository.findAll();
+        return ResponseEntity.ok(msg);
     }
+
     @PostMapping("/message")
-    @ResponseStatus(HttpStatus.CREATED)
-    Message newMessage(@RequestBody Message message) {
-        return repository.save(message);
+    ResponseEntity<Message> newMessage(@RequestBody Message message) {
+        Message msg = repository.save(message);
+        return ResponseEntity.ok(msg);
     }
 }
- */
