@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -16,8 +17,10 @@ public class MessageController {
 
 
     @GetMapping("/message")
-    ResponseEntity<List<Message>> findAll() {
-        List<Message> msg = repository.findAll();
+    ResponseEntity<List<Message>> findAll(
+            @RequestParam(value = "group") Long groupId,
+            @RequestParam(value = "from") Date from) {
+        List<Message> msg = repository.findAllByGroupIdAndDateAfter(groupId, from);
         return ResponseEntity.ok(msg);
     }
 
