@@ -48,4 +48,14 @@ public class GroupController {
         return ResponseEntity.ok(user);
     }
 
+    @PostMapping("group/leave")
+    ResponseEntity<Void> leaveGroup(@RequestBody User user) {
+        userRepository.delete(user);
+        Group group = groupRepository.getOne(user.getGroup().getId());
+        if(group.getUserList().isEmpty()) {
+            groupRepository.delete(group);
+        }
+        return ResponseEntity.ok().build();
+    }
+
 }
