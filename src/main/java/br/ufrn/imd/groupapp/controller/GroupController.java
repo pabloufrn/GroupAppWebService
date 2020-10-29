@@ -55,9 +55,11 @@ public class GroupController {
     }
 
     @PostMapping("group/leave")
-    ResponseEntity<Void> leaveGroup(@RequestBody User user) {
+    ResponseEntity<Void> leaveGroup(@RequestParam(name = "userId") Long id) {
+        User user = userRepository.getOne(id);
+        Long groupId = user.getGroup().getId();
         userRepository.delete(user);
-        Group group = groupRepository.getOne(user.getGroup().getId());
+        Group group = groupRepository.getOne(groupId);
         if(group.getUserList().isEmpty()) {
             groupRepository.delete(group);
         }
