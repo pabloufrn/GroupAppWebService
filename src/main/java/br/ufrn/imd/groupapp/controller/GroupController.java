@@ -26,24 +26,27 @@ public class GroupController {
         return ResponseEntity.ok(groups);
     }
 
-    @PostMapping("/group")
-    ResponseEntity<Group> newGroup(@RequestBody Group newGroup) {
+    @PostMapping("/group/{username}")
+    ResponseEntity<User> newGroup(@PathVariable String username, @RequestBody Group newGroup) {
         Group group = groupRepository.save(newGroup);
-        return ResponseEntity.ok(group);
+        User newUser = new User();
+        newUser.setName(username);
+        newUser.setGroup(group);
+        newUser = userRepository.save(newUser);
+        return ResponseEntity.ok(newUser);
     }
+
 
     @GetMapping("/group/{id}")
     ResponseEntity<Group> findOne(@PathVariable Long id) {
-        Group group = groupRepository.findById(id)
-                .orElseThrow(() -> new GroupNotFoundException(id));
+        Group group = findGroup(id);
         return ResponseEntity.ok(group);
     }
 
     @GetMapping("group/{id}/join/{username}")
     ResponseEntity<User> joinGroup(@PathVariable String username,
                                    @PathVariable(value = "id") Long groupId) {
-        Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new GroupNotFoundException(groupId));
+        Group group = findGroup(groupId);
         User newUser = new User();
         newUser.setName(username);
         newUser.setGroup(group);
@@ -61,4 +64,8 @@ public class GroupController {
         return ResponseEntity.ok().build();
     }
 
+    private Group findGroup(Long id){
+        return groupRepository.findById(id)
+                .orElseThrow(() -> new GroupNotFoundException(id));
+    }
 }
