@@ -1,6 +1,8 @@
 package br.ufrn.imd.groupapp.model;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,5 +19,7 @@ public class Message {
     private User user;
     @ManyToOne
     private Group group;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 }

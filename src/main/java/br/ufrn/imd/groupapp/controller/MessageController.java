@@ -3,6 +3,7 @@ package br.ufrn.imd.groupapp.controller;
 import br.ufrn.imd.groupapp.model.Message;
 import br.ufrn.imd.groupapp.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,8 @@ public class MessageController {
     @GetMapping("/message")
     ResponseEntity<List<Message>> findAll(
             @RequestParam(value = "group") Long groupId,
-            @RequestParam(value = "from") Date from) {
+            @RequestParam(value = "from") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date from
+    ) {
         List<Message> msg = repository.findAllByGroupIdAndDateAfter(groupId, from);
         return ResponseEntity.ok(msg);
     }
