@@ -1,6 +1,8 @@
 package br.ufrn.imd.groupapp.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -15,9 +17,4 @@ public class User {
 
     @ManyToOne
     private Group group;
-
-    public User(String username, Group group) {
-        this.name = username;
-        this.group = group;
-    }
 }

@@ -39,12 +39,15 @@ public class GroupController {
         return ResponseEntity.ok(group);
     }
 
-    @GetMapping("group/join/{username}")
+    @GetMapping("group/{id}/join/{username}")
     ResponseEntity<User> joinGroup(@PathVariable String username,
-                                   @RequestParam(value = "group") Long groupId) {
+                                   @PathVariable(value = "id") Long groupId) {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new GroupNotFoundException(groupId));
-        User user = userRepository.save(new User(username, group));
+        User newUser = new User();
+        newUser.setName(username);
+        newUser.setGroup(group);
+        User user = userRepository.save(newUser);
         return ResponseEntity.ok(user);
     }
 

@@ -1,5 +1,6 @@
 package br.ufrn.imd.groupapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class Group {
     private Long id;
     private String title;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "group")
     private List<User> userList;
 }
