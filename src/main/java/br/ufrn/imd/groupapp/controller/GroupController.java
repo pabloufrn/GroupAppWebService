@@ -26,16 +26,13 @@ public class GroupController {
         return ResponseEntity.ok(groups);
     }
 
-    @PostMapping("/group/{username}")
-    ResponseEntity<User> newGroup(@PathVariable String username, @RequestBody Group newGroup) {
-        Group group = groupRepository.save(newGroup);
-        User newUser = new User();
-        newUser.setName(username);
-        newUser.setGroup(group);
-        newUser = userRepository.save(newUser);
+    @PostMapping("/group")
+    ResponseEntity<User> newGroup(@RequestBody User user) {
+        Group group = groupRepository.save(user.getGroup());
+        user.setGroup(group);
+        User newUser = userRepository.save(user);
         return ResponseEntity.ok(newUser);
     }
-
 
     @GetMapping("/group/{id}")
     ResponseEntity<Group> findOne(@PathVariable Long id) {
@@ -43,19 +40,17 @@ public class GroupController {
         return ResponseEntity.ok(group);
     }
 
-    @GetMapping("group/{id}/join/{username}")
-    ResponseEntity<User> joinGroup(@PathVariable String username,
-                                   @PathVariable(value = "id") Long groupId) {
+    @PostMapping("group/{id}/user")
+    ResponseEntity<User> joinGroup(@PathVariable(value = "id") Long groupId,
+                                   @RequestBody User user) {
         Group group = findGroup(groupId);
-        User newUser = new User();
-        newUser.setName(username);
-        newUser.setGroup(group);
-        User user = userRepository.save(newUser);
-        return ResponseEntity.ok(user);
+        user.setGroup(group);
+        User newUser = userRepository.save(user);
+        return ResponseEntity.ok(newUser);
     }
 
-    @PostMapping("group/leave")
-    ResponseEntity<Void> leaveGroup(@RequestParam(name = "userId") Long id) {
+    @DeleteMapping("/user/{id}")
+    ResponseEntity<Void> leaveGroup(@PathVariable(name = "id") Long id) {
         User user = userRepository.getOne(id);
         Long groupId = user.getGroup().getId();
         userRepository.delete(user);
