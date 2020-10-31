@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("group")
 public class GroupController {
 
     @Autowired
@@ -20,13 +21,13 @@ public class GroupController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/group")
+    @GetMapping()
     ResponseEntity<List<Group>> findAll() {
         List<Group> groups = groupRepository.findAll();
         return ResponseEntity.ok(groups);
     }
 
-    @PostMapping("/group/{username}")
+    @PostMapping("/{username}")
     ResponseEntity<User> newGroup(@PathVariable String username, @RequestBody Group newGroup) {
         Group group = groupRepository.save(newGroup);
         User newUser = new User();
@@ -37,13 +38,13 @@ public class GroupController {
     }
 
 
-    @GetMapping("/group/{id}")
+    @GetMapping("/{id}")
     ResponseEntity<Group> findOne(@PathVariable Long id) {
         Group group = findGroup(id);
         return ResponseEntity.ok(group);
     }
 
-    @GetMapping("group/{id}/join/{username}")
+    @GetMapping("/{id}/join/{username}")
     ResponseEntity<User> joinGroup(@PathVariable String username,
                                    @PathVariable(value = "id") Long groupId) {
         Group group = findGroup(groupId);
@@ -54,7 +55,7 @@ public class GroupController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("group/leave")
+    @PostMapping("/leave")
     ResponseEntity<Void> leaveGroup(@RequestParam(name = "userId") Long id) {
         User user = userRepository.getOne(id);
         Long groupId = user.getGroup().getId();

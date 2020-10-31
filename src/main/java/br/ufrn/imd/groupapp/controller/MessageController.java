@@ -20,7 +20,7 @@ public class MessageController {
     @GetMapping("/message")
     ResponseEntity<List<Message>> findAll(
             @RequestParam(value = "group") Long groupId,
-            @RequestParam(value = "from") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date from
+            @RequestParam(value = "from") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX") Date from
     ) {
         List<Message> msg = repository.findAllByGroupIdAndDateAfter(groupId, from);
         return ResponseEntity.ok(msg);
