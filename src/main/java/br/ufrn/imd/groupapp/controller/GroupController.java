@@ -20,7 +20,7 @@ public class GroupController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping()
+    @GetMapping("/group")
     ResponseEntity<List<Group>> findAll() {
         List<Group> groups = groupRepository.findAll();
         return ResponseEntity.ok(groups);
