@@ -2,8 +2,10 @@ package br.ufrn.imd.groupapp.controller;
 
 import br.ufrn.imd.groupapp.error.GroupNotFoundException;
 import br.ufrn.imd.groupapp.model.Group;
+import br.ufrn.imd.groupapp.model.Message;
 import br.ufrn.imd.groupapp.model.User;
 import br.ufrn.imd.groupapp.repository.GroupRepository;
+import br.ufrn.imd.groupapp.repository.MessageRepository;
 import br.ufrn.imd.groupapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,9 @@ public class GroupController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private MessageRepository messageRepository;
+
     @GetMapping("/group")
     ResponseEntity<List<Group>> findAll() {
         List<Group> groups = groupRepository.findAll();
@@ -31,6 +36,7 @@ public class GroupController {
         Group group = groupRepository.save(user.getGroup());
         user.setGroup(group);
         User newUser = userRepository.save(user);
+        messageRepository.save(new Message(user.getName() + " entrou no grupo!", group));
         return ResponseEntity.ok(newUser);
     }
 
@@ -46,6 +52,7 @@ public class GroupController {
         Group group = findGroup(groupId);
         user.setGroup(group);
         User newUser = userRepository.save(user);
+        messageRepository.save(new Message(user.getName() + " entrou no grupo!", group));
         return ResponseEntity.ok(newUser);
     }
 
