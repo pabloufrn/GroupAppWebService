@@ -1,7 +1,9 @@
 package br.ufrn.imd.groupapp.controller;
 
 import br.ufrn.imd.groupapp.model.Message;
+import br.ufrn.imd.groupapp.model.User;
 import br.ufrn.imd.groupapp.repository.MessageRepository;
+import br.ufrn.imd.groupapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ public class MessageController {
     @Autowired
     private MessageRepository repository;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     @GetMapping("/message")
     ResponseEntity<List<Message>> findAll(
@@ -27,7 +32,11 @@ public class MessageController {
     }
 
     @PostMapping("/message")
-    ResponseEntity<Message> newMessage(@RequestBody Message message) {
+    ResponseEntity<Message> newMessage(@RequestParam(value = "userId") Long userId,
+                                       @RequestBody Message message) {
+        User user = userRepository.getOne(userId);
+        message.setAuthor(user.getName());
+        message.setGroup(user.getGroup());
         Message msg = repository.save(message);
         return ResponseEntity.ok(msg);
     }

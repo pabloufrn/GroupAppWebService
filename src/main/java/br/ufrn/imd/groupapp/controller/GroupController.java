@@ -63,7 +63,10 @@ public class GroupController {
         userRepository.delete(user);
         Group group = groupRepository.getOne(groupId);
         if(group.getUserList().isEmpty()) {
+            messageRepository.deleteAll(group.getMessages());
             groupRepository.delete(group);
+        } else {
+            messageRepository.save(new Message(user.getName() + " saiu do grupo!", group));
         }
         return ResponseEntity.ok().build();
     }

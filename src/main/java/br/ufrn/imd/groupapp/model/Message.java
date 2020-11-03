@@ -24,8 +24,7 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String text;
-    @ManyToOne
-    private User user;
+    private String author;
     @ManyToOne
     private Group group;
     @CreationTimestamp

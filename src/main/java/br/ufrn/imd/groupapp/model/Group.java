@@ -18,4 +18,8 @@ public class Group {
     @JsonIgnore
     @OneToMany(mappedBy = "group")
     private List<User> userList;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "group")
+    private List<Message> messages;
 }
