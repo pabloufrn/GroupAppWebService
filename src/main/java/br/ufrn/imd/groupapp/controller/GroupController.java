@@ -40,12 +40,6 @@ public class GroupController {
         return ResponseEntity.ok(newUser);
     }
 
-    @GetMapping("/group/{id}")
-    ResponseEntity<Group> findOne(@PathVariable Long id) {
-        Group group = findGroup(id);
-        return ResponseEntity.ok(group);
-    }
-
     @PostMapping("group/{id}/user")
     ResponseEntity<User> joinGroup(@PathVariable(value = "id") Long groupId,
                                    @RequestBody User user) {
